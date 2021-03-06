@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concreate;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,11 @@ namespace DataAccess.Concreate.InMemory
         public int GetById(Vehicle vehicle)
         {
             return vehicle.Id;
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Vehicle vehicle)

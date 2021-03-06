@@ -1,4 +1,5 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using Entities.Concreate;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace DataAccess.Concreate.EntityFramework
 {
-    public class EfColorDal : IColorDal
+    public class EfColorDal :EfEntityRepositoryBase<Color,RentCarContext>, IColorDal
     {
         public void Add(Color entity)
         {

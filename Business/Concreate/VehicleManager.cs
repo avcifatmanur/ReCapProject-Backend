@@ -2,6 +2,7 @@
 using DataAccess.Abstract;
 using DataAccess.Concreate.EntityFramework;
 using Entities.Concreate;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,14 +33,30 @@ namespace Business.Concreate
 
         public void Delete(Vehicle car)
         {
-            _vehicleDal.Delete(car);
-            Console.WriteLine("Araç silindi!");
+            Vehicle result = _vehicleDal.Get(v => v.Id == car.Id && v.VehicleName == car.VehicleName);
+            if (result != null)
+            {
+                _vehicleDal.Delete(car);
+                Console.WriteLine("Araç silindi!");
+            }
+            else
+            {
+                Console.WriteLine("Araç bilgileri hatalı!");
+            }
         }
 
         public void Update(Vehicle car)
         {
-            _vehicleDal.Update(car);
-            Console.WriteLine("Araç güncellendi!");
+            Vehicle result = _vehicleDal.Get(v => v.Id == car.Id);
+            if (result != null)
+            {
+                _vehicleDal.Update(car);
+                Console.WriteLine("Araç güncellendi!");
+            }
+            else
+            {
+                Console.WriteLine("Böyle bir araç yok!");
+            }
         }
 
         public List<Vehicle> GetAll()
@@ -55,6 +72,16 @@ namespace Business.Concreate
         public List<Vehicle> GetCarsByColorId(int id)
         {
             return _vehicleDal.GetAll(c => c.ColorId == id);
+        }
+
+        public Vehicle GetById(int id)
+        {
+            return _vehicleDal.Get(v => v.Id == id);
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _vehicleDal.GetCarDetails();
         }
     }
 }
