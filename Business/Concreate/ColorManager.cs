@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concreate;
 using System;
@@ -16,55 +18,55 @@ namespace Business.Concreate
             _colorDal = colorDal;
         }
 
-        public void Add(Color color)
+        public IResult Add(Color color)
         {
             Color result = _colorDal.Get(c => c.ColorId == color.ColorId);
             if (result!=null)
             {
-                Console.WriteLine("Bu renk zaten mevcut!");
+                return new ErrorResult(Messages.ColorAvailable);
             }
             else
             {
                 _colorDal.Add(color);
-                Console.WriteLine("Yeni renk eklendi!");
+                return new SuccessResult(Messages.ColorAdded);
             }             
         }
 
-        public void Delete(Color color)
+        public IResult Delete(Color color)
         {
             Color result = _colorDal.Get(c => c.ColorId == color.ColorId && c.ColorName == color.ColorName);
             if (result != null)
             {
                 _colorDal.Delete(color);
-                Console.WriteLine("Renk silindi!");
+                return new SuccessResult(Messages.ColorDeleted);
             }
             else
             {
-                Console.WriteLine("Renk bilgileri hatalı!");
+                return new ErrorResult(Messages.ColorInvalid);
             }
         }
 
-        public List<Color> GetAll()
+        public IDataResult<List<Color>> GetAll()
         {
-            return _colorDal.GetAll();
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll());
         }
 
-        public Color GetById(int colorId)
+        public IDataResult<Color> GetById(int colorId)
         {
-            return _colorDal.Get(c => c.ColorId == colorId);
+            return new SuccessDataResult<Color>(_colorDal.Get(c => c.ColorId == colorId));
         }
 
-        public void Update(Color color)
+        public IResult Update(Color color)
         {
             Color result = _colorDal.Get(c => c.ColorId == color.ColorId);
             if (result != null)
             {
                 _colorDal.Update(color);
-                Console.WriteLine("Renk güncellendi!");
+                return new SuccessResult(Messages.ColorUpdated);
             }
             else
             {
-                Console.WriteLine("Böyle bir renk yok!");
+                return new ErrorResult(Messages.ColorInvalid);
             }
         }
     }

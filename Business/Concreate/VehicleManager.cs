@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concreate.EntityFramework;
 using Entities.Concreate;
@@ -18,70 +20,70 @@ namespace Business.Concreate
             _vehicleDal = vehicleDal;
         }
 
-        public void Add(Vehicle car)
+        public IResult Add(Vehicle car)
         {
             if (car.VehicleName.Length>=2 && car.DailyPrice>0)
             {
                 _vehicleDal.Add(car);
-                Console.WriteLine("Yeni araç eklendi!");
+                return new SuccessResult(Messages.CarAdded);
             }
             else {
-                Console.WriteLine("Araç ismi en az 2 karakter ve günlük ücret sıfırdan büyük olmalı!");
+                return new ErrorResult(Messages.CarInvalid);
             }
             
         }
 
-        public void Delete(Vehicle car)
+        public IResult Delete(Vehicle car)
         {
             Vehicle result = _vehicleDal.Get(v => v.Id == car.Id && v.VehicleName == car.VehicleName);
             if (result != null)
             {
                 _vehicleDal.Delete(car);
-                Console.WriteLine("Araç silindi!");
+                return new SuccessResult(Messages.CarDeleted);
             }
             else
             {
-                Console.WriteLine("Araç bilgileri hatalı!");
+                return new ErrorResult(Messages.CarInvalid);
             }
         }
 
-        public void Update(Vehicle car)
+        public IResult Update(Vehicle car)
         {
             Vehicle result = _vehicleDal.Get(v => v.Id == car.Id);
             if (result != null)
             {
                 _vehicleDal.Update(car);
-                Console.WriteLine("Araç güncellendi!");
+                return new SuccessResult(Messages.CarUpdated);
             }
             else
             {
-                Console.WriteLine("Böyle bir araç yok!");
+                return new ErrorResult(Messages.CarInvalid);
             }
         }
 
-        public List<Vehicle> GetAll()
+        public IDataResult<List<Vehicle>> GetAll()
         {
-            return _vehicleDal.GetAll(); 
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(),Messages.CarListed); 
         }
 
-        public List<Vehicle> GetCarsByBrandId(int id)
+        public IDataResult<List<Vehicle>> GetCarsByBrandId(int id)
         {
-            return _vehicleDal.GetAll(c => c.BrandId == id);
+            return new ErrorDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.BrandId == id),Messages.CarListed);
         }
 
-        public List<Vehicle> GetCarsByColorId(int id)
+        public IDataResult<List<Vehicle>> GetCarsByColorId(int id)
         {
-            return _vehicleDal.GetAll(c => c.ColorId == id);
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.ColorId == id),Messages.CarListed);
         }
 
-        public Vehicle GetById(int id)
+        public IDataResult<Vehicle> GetById(int id)
         {
-            return _vehicleDal.Get(v => v.Id == id);
+            return new SuccessDataResult<Vehicle>(_vehicleDal.Get(v => v.Id == id));
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _vehicleDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(_vehicleDal.GetCarDetails());
         }
     }
 }

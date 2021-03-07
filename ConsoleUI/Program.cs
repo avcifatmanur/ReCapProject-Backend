@@ -27,81 +27,101 @@ namespace ConsoleUI
         {
             Console.WriteLine("-----------ARAÇLAR-----------");
             VehicleManager vehicleManager = new VehicleManager(new EfVehicleDal());
-            foreach (var car in vehicleManager.GetCarDetails())
+            var result = vehicleManager.GetCarDetails();
+            if (result.Success==true)
             {
-                Console.WriteLine("{0} / {1} / {2} / {3} / ",car.carName,car.brandName,car.colorName,car.DailyPrice);
-
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine("{0} / {1} / {2} / {3} / ", car.carName, car.brandName, car.colorName, car.DailyPrice);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
         }
         private static void UpdateBrandTest()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            brandManager.Update(new Brand { BrandId = 6, BrandName = "Volvo" });
-            Console.WriteLine("Tüm Markalar");
-            foreach (var brand in brandManager.GetAll())
+            var result = brandManager.Update(new Brand { BrandId = 6, BrandName = "Volvo" });
+            if (result.Success == true)
             {
-
-                Console.WriteLine(brand.BrandName);
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
 
         private static void DeleteBrandTest()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            brandManager.Delete(new Brand { BrandId = 5, BrandName = "Mercedes" });
-            Console.WriteLine("Tüm Markalar");
-            foreach (var brand in brandManager.GetAll())
+            var result=brandManager.Delete(new Brand { BrandId = 5, BrandName = "Mercedes" });
+            if (result.Success == true)
             {
-
-                Console.WriteLine(brand.BrandName);
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
 
         private static void AddBrandTest()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            brandManager.Add(new Brand { BrandId = 5, BrandName = "Mercedes" });
-            Console.WriteLine("Tüm Markalar");
-            foreach (var brand in brandManager.GetAll())
+            var result= brandManager.Add(new Brand { BrandId = 5, BrandName = "Mercedes" });
+            if (result.Success == true)
             {
-
-                Console.WriteLine(brand.BrandName);
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
 
         private static void UpdateColorTest()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            colorManager.Update(new Color { ColorId = 1, ColorName = "gold" });
-            Console.WriteLine("Tüm Renkler");
-            foreach (var color in colorManager.GetAll())
+            var result=colorManager.Update(new Color { ColorId = 1, ColorName = "gold" });
+            if (result.Success == true)
             {
-
-                Console.WriteLine(color.ColorName);
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
 
         private static void DeleteColorTest()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            colorManager.Delete(new Color { ColorId = 2, ColorName = "siyah" });
-            Console.WriteLine("Tüm Renkler");
-            foreach (var color in colorManager.GetAll())
+            var result=colorManager.Delete(new Color { ColorId = 2, ColorName = "siyah" });
+            if (result.Success == true)
             {
-
-                Console.WriteLine(color.ColorName);
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
 
         private static void AddColorTest()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            colorManager.Add(new Color { ColorId = 3, ColorName = "Kırmızı" });
-            Console.WriteLine("Tüm Renkler");
-            foreach (var color in colorManager.GetAll())
+            var result=colorManager.Add(new Color { ColorId = 3, ColorName = "Kırmızı" });
+            if (result.Success == true)
             {
-
-                Console.WriteLine(color.ColorName);
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
 
@@ -109,35 +129,43 @@ namespace ConsoleUI
         public static void AddCarTest()
         {
             VehicleManager carManager = new VehicleManager(new EfVehicleDal());
-            carManager.Add(new Vehicle { Id = 9, BrandId = 5, ColorId = 3, VehicleName = "BMW 316i", ModelYear = 2019, DailyPrice = 400, Description = "otomatik" });
-            Console.WriteLine("---------GÜNCEL ARAÇLAR---------");
-            foreach (Vehicle car in carManager.GetAll())
+            var result=carManager.Add(new Vehicle { Id = 9, BrandId = 5, ColorId = 3, VehicleName = "BMW 316i", ModelYear = 2019, DailyPrice = 400, Description = "otomatik" });
+            if (result.Success == true)
             {
-                Console.WriteLine(car.VehicleName);
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
 
         }
         private static void UpdateCarTest()
         {
             VehicleManager carManager = new VehicleManager(new EfVehicleDal());
-            carManager.Update(new Vehicle { Id = 9, BrandId = 5, ColorId = 3, VehicleName = "520i", ModelYear = 2018, DailyPrice = 350, Description = "otomatik" });
-            Console.WriteLine("---------GÜNCEL ARAÇLAR---------");
-            foreach (Vehicle car in carManager.GetAll())
+            var result=carManager.Update(new Vehicle { Id = 9, BrandId = 5, ColorId = 3, VehicleName = "520i", ModelYear = 2018, DailyPrice = 350, Description = "otomatik" });
+            if (result.Success == true)
             {
-                Console.WriteLine(car.VehicleName);
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
 
         }
         public static void DeleteCarTest()
         {
             VehicleManager carManager = new VehicleManager(new EfVehicleDal());
-            carManager.Delete(new Vehicle { Id = 8, BrandId = 5, ColorId = 3, VehicleName = "BMW 316i", ModelYear = 2019, DailyPrice = 400, Description = "otomatik" });
-            Console.WriteLine("---------GÜNCEL ARAÇLAR---------");
-            foreach (Vehicle car in carManager.GetAll())
+            var result=carManager.Delete(new Vehicle { Id = 8, BrandId = 5, ColorId = 3, VehicleName = "BMW 316i", ModelYear = 2019, DailyPrice = 400, Description = "otomatik" });
+            if (result.Success == true)
             {
-                Console.WriteLine(car.VehicleName);
+                Console.WriteLine(result.Message);
             }
-
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concreate;
 using System;
@@ -16,55 +18,55 @@ namespace Business.Concreate
             _brandDal = brandDal;
         }
 
-        public void Add(Brand brand)
+        public IResult Add(Brand brand)
         {
             Brand result = _brandDal.Get(b => b.BrandId == brand.BrandId);
             if (result != null)
             {
-                Console.WriteLine("Bu marka id si zaten mevcut!");
+                return new ErrorResult(Messages.BrandAvailable);
             }
             else
             {
                 _brandDal.Add(brand);
-                Console.WriteLine("Yeni marka eklendi!");
+                return new SuccessResult(Messages.BrandAdded);
             }
         }
 
-        public void Delete(Brand brand)
+        public IResult Delete(Brand brand)
         {
             Brand result = _brandDal.Get(b => b.BrandId == brand.BrandId && b.BrandName == brand.BrandName);
             if (result != null)
             {
                 _brandDal.Delete(brand);
-                Console.WriteLine("Marka silindi!");
+                return new SuccessResult(Messages.BrandDeleted);
             }
             else
             {
-                Console.WriteLine("Marka bilgileri hatalı!");
+                return new SuccessResult(Messages.BrandInvalid);
             }
         }
 
-        public List<Brand> GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
-            return _brandDal.GetAll();
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
         }
 
-        public Brand GetById(int brandId)
+        public IDataResult<Brand> GetById(int brandId)
         {
-            return _brandDal.Get(b => b.BrandId == brandId);
+            return new SuccessDataResult<Brand>(_brandDal.Get(b => b.BrandId == brandId));
         }
 
-        public void Update(Brand brand)
+        public IResult Update(Brand brand)
         {
             Brand result = _brandDal.Get(b => b.BrandId == brand.BrandId);
             if (result != null)
             {
                 _brandDal.Update(brand);
-                Console.WriteLine("Marka güncellendi!");
+                return new SuccessResult(Messages.BrandUpdated);
             }
             else
             {
-                Console.WriteLine("Marka bilgileri hatalı!");
+                return new SuccessResult(Messages.BrandInvalid);
             }
         }
     }
