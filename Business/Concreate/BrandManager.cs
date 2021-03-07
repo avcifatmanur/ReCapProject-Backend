@@ -64,7 +64,7 @@ namespace Business.Concreate
                 _brandDal.Update(brand);
                 return new SuccessResult(Messages.BrandUpdated);
             }
-            else
+            else 
             {
                 return new SuccessResult(Messages.BrandInvalid);
             }

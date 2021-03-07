@@ -35,7 +35,7 @@ namespace Business.Concreate
 
         public IResult Delete(Vehicle car)
         {
-            Vehicle result = _vehicleDal.Get(v => v.Id == car.Id && v.VehicleName == car.VehicleName);
+            Vehicle result = _vehicleDal.Get(v => v.CarId == car.CarId && v.VehicleName == car.VehicleName);
             if (result != null)
             {
                 _vehicleDal.Delete(car);
@@ -49,7 +49,7 @@ namespace Business.Concreate
 
         public IResult Update(Vehicle car)
         {
-            Vehicle result = _vehicleDal.Get(v => v.Id == car.Id);
+            Vehicle result = _vehicleDal.Get(v => v.CarId == car.CarId);
             if (result != null)
             {
                 _vehicleDal.Update(car);
@@ -78,7 +78,7 @@ namespace Business.Concreate
 
         public IDataResult<Vehicle> GetById(int id)
         {
-            return new SuccessDataResult<Vehicle>(_vehicleDal.Get(v => v.Id == id));
+            return new SuccessDataResult<Vehicle>(_vehicleDal.Get(v => v.CarId == id));
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()

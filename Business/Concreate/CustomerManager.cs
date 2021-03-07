@@ -1,0 +1,73 @@
+﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
+using Entities.Concreate;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Business.Concreate
+{
+    public class CustomerManager : ICustomerService
+    {
+        ICustomerDal _customerDal;
+
+        public CustomerManager(ICustomerDal customerDal)
+        {
+            _customerDal = customerDal;
+        }
+
+        public IResult Add(Customer customer)
+        {
+            Customer result = _customerDal.Get(c => c.CustomerId == customer.CustomerId);
+            if (result != null)
+            {
+                return new ErrorResult(Messages.CustomerAvailable);
+            }
+            else
+            {
+                _customerDal.Add(customer);
+                return new SuccessResult(Messages.CustomerAdded);
+            }
+        }
+
+        public IResult Delete(Customer customer)
+        {
+            Customer result = _customerDal.Get(c => c.CustomerId == customer.CustomerId && c.UserId == customer.UserId);
+            if (result != null)
+            {
+                _customerDal.Delete(customer);
+                return new SuccessResult(Messages.CustomerDeleted);
+            }
+            else
+            {
+                return new SuccessResult(Messages.CustomerInvalid);
+            }
+        }
+
+        public IDataResult<List<Customer>> GetAll()
+        {
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
+        }
+
+        public IDataResult<Customer> GetById(int customerId)
+        {
+            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.CustomerId == customerId));
+        }
+
+        public IResult Update(Customer customer)
+        {
+            Customer result = _customerDal.Get(c => c.CustomerId == customer.CustomerId);
+            if (result != null)
+            {
+                _customerDal.Update(customer);
+                return new SuccessResult(Messages.CustomerUpdated);
+            }
+            else
+            {
+                return new SuccessResult(Messages.CustomerInvalid);
+            }
+        }
+    }
+}
