@@ -27,7 +27,7 @@ namespace ConsoleUI
         private static void AddRentalTest()
         {
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            var result = rentalManager.Add(new Rental { RentalId=2, CarId = 1, CustomerId = 1 });
+            var result = rentalManager.Add(new Rental { RentalId=3, CarId = 1, CustomerNo = 1 });
             if (result.Success == true)
             {
                 Console.WriteLine(result.Message);

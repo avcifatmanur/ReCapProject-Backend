@@ -47,7 +47,7 @@ namespace Business.Concreate
             }
             else
             {
-                return new SuccessResult(Messages.RentalInvalid);
+                return new ErrorResult(Messages.RentalInvalid);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Business.Concreate
             }
             else
             {
-                return new SuccessResult(Messages.RentalInvalid);
+                return new ErrorResult(Messages.RentalInvalid);
             }
         }
     }
