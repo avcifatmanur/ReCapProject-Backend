@@ -1,10 +1,13 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concreate.EntityFramework;
 using Entities.Concreate;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,15 +25,9 @@ namespace Business.Concreate
 
         public IResult Add(Vehicle car)
         {
-            if (car.VehicleName.Length>=2 && car.DailyPrice>0)
-            {
-                _vehicleDal.Add(car);
-                return new SuccessResult(Messages.CarAdded);
-            }
-            else {
-                return new ErrorResult(Messages.CarInvalid);
-            }
-            
+            ValidationTool.Validate(new VehicleValidator(), car);
+            _vehicleDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Delete(Vehicle car)
@@ -63,17 +60,17 @@ namespace Business.Concreate
 
         public IDataResult<List<Vehicle>> GetAll()
         {
-            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(),Messages.CarListed); 
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(), Messages.CarListed);
         }
 
         public IDataResult<List<Vehicle>> GetCarsByBrandId(int id)
         {
-            return new ErrorDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.BrandId == id),Messages.CarListed);
+            return new ErrorDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.BrandId == id), Messages.CarListed);
         }
 
         public IDataResult<List<Vehicle>> GetCarsByColorId(int id)
         {
-            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.ColorId == id),Messages.CarListed);
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.ColorId == id), Messages.CarListed);
         }
 
         public IDataResult<Vehicle> GetById(int id)
