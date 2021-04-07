@@ -20,7 +20,7 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(u => u.Email).NotEmpty();
             RuleFor(u => u.Email).Must(ValidEmail).WithMessage("Geçerli bir mail adresi olmalı!");
             RuleFor(u => u.Password).NotEmpty();
-            RuleFor(u => u.Password).Length(6).WithMessage("Parola en az 6 karakter uzunluğunda olmalı!");
+            RuleFor(u => u.Password).MinimumLength(6).WithMessage("Parola en az 6 karakter uzunluğunda olmalı!");
         }
 
         private bool ValidEmail(string arg)
