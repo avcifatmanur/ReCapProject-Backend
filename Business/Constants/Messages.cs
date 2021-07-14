@@ -42,7 +42,11 @@ namespace Business.Constants
         public static string RentalFailed = "Araç şuan müsait değil!";
         public static string RentalReturn = "Araç teslim alındı!";
         public static string RentalInvalid = "Girilen bilgiler geçersiz!";
+        internal static string CarCheckImageLimited="Araç resim limitine ulaştı!";
 
-
+        public static string AddedCarImages = "Araba resmi eklendi!";
+        internal static string NotFoundImage= "Resim bulunamadı!";
+        internal static string DeletedImage="Resim silindi!";
+        internal static string UpdatedImage="Resim güncellendi!";
     }
 }
