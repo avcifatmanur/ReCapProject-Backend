@@ -1,6 +1,6 @@
 ﻿using Core.DataAccess.EntityFramework;
+using Core.Entities.Concrete;
 using DataAccess.Abstract;
-using Entities.Concreate;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -47,6 +47,20 @@ namespace DataAccess.Concreate.EntityFramework
             {
                 return filter == null ? context.Set<User>().ToList()
                     : context.Set<User>().Where(filter).ToList();
+
+            }
+        }
+
+        public List<OperationClaim> GetClaims(User user)
+        {
+            using (var context = new RentCarContext())
+            {
+                var result = from operationClaim in context.OperationClaims
+                             join userOperationClaim in context.UserOperationClaims
+                             on operationClaim.Id equals userOperationClaim.OperationClaimId
+                             where userOperationClaim.UserId == user.UserId
+                             select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };
+                return result.ToList(); 
 
             }
         }

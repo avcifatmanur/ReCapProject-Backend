@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -42,11 +43,18 @@ namespace Business.Constants
         public static string RentalFailed = "Araç şuan müsait değil!";
         public static string RentalReturn = "Araç teslim alındı!";
         public static string RentalInvalid = "Girilen bilgiler geçersiz!";
-        internal static string CarCheckImageLimited="Araç resim limitine ulaştı!";
+        public static string CarCheckImageLimited="Araç resim limitine ulaştı!";
 
         public static string AddedCarImages = "Araba resmi eklendi!";
-        internal static string NotFoundImage= "Resim bulunamadı!";
-        internal static string DeletedImage="Resim silindi!";
-        internal static string UpdatedImage="Resim güncellendi!";
+        public static string NotFoundImage= "Resim bulunamadı!";
+        public static string DeletedImage="Resim silindi!";
+        public static string UpdatedImage="Resim güncellendi!";
+
+        public static string UserNotFound = "Kullanıcı bulunamadı!";
+        public static string PasswordError = "Hatalı parola!";
+        public static string SuccessfulLogin = "Giriş başarılı!";
+        public static string UserAlreadyExist = "Bu kullanıcı zaten mevcut!";
+        public static string UserRegistered = "Kullanıcı başarıyla kaydedildi!";
+        public static string AccessTokenCreated = "Access token başarıyla oluşturuldu!";
     }
 }
