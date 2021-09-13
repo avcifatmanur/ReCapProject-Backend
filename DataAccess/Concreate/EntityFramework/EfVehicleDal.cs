@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess.EntityFramework;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concreate;
 using Entities.DTOs;
@@ -70,6 +71,8 @@ namespace DataAccess.Concreate.EntityFramework
                 return result.ToList();
             }
         }
+
+    
 
         public void Update(Vehicle entity)
         {

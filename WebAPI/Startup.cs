@@ -1,6 +1,9 @@
 
 using Business.Abstract;
 using Business.Concreate;
+using Core.DependencyResolvers;
+using Core.Extentions;
+using Core.Utilities.IOC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
@@ -54,6 +57,8 @@ namespace WebAPI
                     IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                 };
             });
+
+            services.AddDependencyResolvers(new ICoreModule[] {new CoreModule()});
             
         }
 
