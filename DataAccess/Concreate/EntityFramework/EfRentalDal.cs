@@ -2,6 +2,7 @@
 using DataAccess.Abstract;
 using Entities.Concreate;
 using Microsoft.EntityFrameworkCore;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,29 @@ namespace DataAccess.Concreate.EntityFramework
                 var updatedEntity = context.Entry(entity);
                 updatedEntity.State = EntityState.Modified;
                 context.SaveChanges();
+            }
+        }
+        public List<RentalDetailDto> GetRentalDetails()
+        {
+            using (RentCarContext context = new RentCarContext())
+            {
+                var result = from v in context.Cars
+                             join r in context.Rentals
+                             on v.CarId equals r.CarId
+                             join c in context.Customers
+                             on r.CustomerNo equals c.CustomerId
+                             join b in context.Brands
+                             on v.BrandId equals b.BrandId
+                             select new RentalDetailDto
+                             {
+                                 RentalId = r.RentalId,
+                                 CarName = b.BrandName,
+                                 CustomerName = c.CompanyName,
+                                 RentDate = r.RentDate,
+                                 ReturnDate = r.ReturnDate
+
+                             };
+                return result.ToList();
             }
         }
     }

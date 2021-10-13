@@ -67,7 +67,7 @@ namespace Business.Concreate
                 return new ErrorResult(Messages.CarInvalid);
             }
         }
-
+        
         [CacheAspect]
         public IDataResult<List<Vehicle>> GetAll()
         {
@@ -76,12 +76,12 @@ namespace Business.Concreate
 
         public IDataResult<List<Vehicle>> GetCarsByBrandId(int id)
         {
-            return new ErrorDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.BrandId == id), Messages.CarListed);
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.BrandId == id));
         }
 
         public IDataResult<List<Vehicle>> GetCarsByColorId(int id)
         {
-            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.ColorId == id), Messages.CarListed);
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.ColorId == id));
         }
 
         [CacheAspect]
