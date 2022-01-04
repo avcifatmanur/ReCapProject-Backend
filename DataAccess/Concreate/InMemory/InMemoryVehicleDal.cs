@@ -32,6 +32,15 @@ namespace DataAccess.Concreate.InMemory
         {
             _cars.Add(vehicle);
         }
+        public void Update(Vehicle vehicle)
+        {
+            Vehicle updatedVehicle = _cars.SingleOrDefault(v => v.CarId == vehicle.CarId);
+            updatedVehicle.BrandId = vehicle.BrandId;
+            updatedVehicle.ColorId = vehicle.ColorId;
+            updatedVehicle.ModelYear = vehicle.ModelYear;
+            updatedVehicle.DailyPrice = vehicle.DailyPrice;
+            updatedVehicle.Description = vehicle.Description;
+        }
 
         public void Delete(Vehicle vehicle)
         {
@@ -44,34 +53,15 @@ namespace DataAccess.Concreate.InMemory
             throw new NotImplementedException();
         }
 
-        public List<Vehicle> GetAll()
-        {
-            return _cars;
-        }
-
-        public List<Vehicle> GetAll(Expression<Func<Vehicle, bool>> filter = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetById(Vehicle vehicle)
-        {
-            return vehicle.CarId;
-        }
 
         public List<CarDetailDto> GetCarDetails()
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Vehicle vehicle)
+        public List<Vehicle> GetAll(Expression<Func<Vehicle, bool>> filter = null)
         {
-            Vehicle updatedVehicle = _cars.SingleOrDefault(v => v.CarId == vehicle.CarId);
-            updatedVehicle.BrandId = vehicle.BrandId;
-            updatedVehicle.ColorId = vehicle.ColorId;
-            updatedVehicle.ModelYear = vehicle.ModelYear;
-            updatedVehicle.DailyPrice = vehicle.DailyPrice;
-            updatedVehicle.Description = vehicle.Description;
+            throw new NotImplementedException();
         }
     }
 }

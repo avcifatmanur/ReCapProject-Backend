@@ -53,10 +53,12 @@ namespace DataAccess.Concreate.EntityFramework
             }
         }
 
+
         public List<CarDetailDto> GetCarDetails()
         {
             using (RentCarContext context=new RentCarContext())
             {
+
                 var result = from v in context.Cars
                              join b in context.Brands on v.BrandId equals b.BrandId
                              join c in context.Colors on v.ColorId equals c.ColorId
@@ -75,8 +77,6 @@ namespace DataAccess.Concreate.EntityFramework
             }
         }
 
-    
-
         public void Update(Vehicle entity)
         {
             using (RentCarContext context = new RentCarContext())
@@ -86,6 +86,6 @@ namespace DataAccess.Concreate.EntityFramework
                 context.SaveChanges();
             }
         }
-       
+        
     }
 }

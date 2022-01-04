@@ -74,14 +74,14 @@ namespace Business.Concreate
             return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(), Messages.CarListed);
         }
 
-        public IDataResult<List<Vehicle>> GetCarsByBrandId(int id)
+        public IDataResult<List<Vehicle>> GetCarsByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.BrandId == id));
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.BrandId == brandId));
         }
 
-        public IDataResult<List<Vehicle>> GetCarsByColorId(int id)
+        public IDataResult<List<Vehicle>> GetCarsByColorId(int colorId)
         {
-            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.ColorId == id));
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.ColorId == colorId));
         }
 
         [CacheAspect]
@@ -89,7 +89,7 @@ namespace Business.Concreate
         {
             return new SuccessDataResult<Vehicle>(_vehicleDal.Get(v => v.CarId == id));
         }
-
+      
         [CacheAspect]
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
@@ -104,5 +104,7 @@ namespace Business.Concreate
             return new SuccessResult(Messages.CarUpdated);
 
         }
+
+       
     }
 }

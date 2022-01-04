@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
         //[Authorize(Roles ="Car.List")]
         public IActionResult GetAll()
         {
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
             var result = _vehicleService.GetAll();
             if (result.Success)
             {
@@ -45,6 +45,7 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+
         [HttpGet("getbyid")]
         public IActionResult GetById(int id)
         {
