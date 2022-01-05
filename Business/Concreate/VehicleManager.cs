@@ -74,14 +74,14 @@ namespace Business.Concreate
             return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(), Messages.CarListed);
         }
 
-        public IDataResult<List<Vehicle>> GetCarsByBrandId(int brandId)
+        public IDataResult<List<CarDetailDto>> GetCarsByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.BrandId == brandId));
+            return new SuccessDataResult<List<CarDetailDto>>(_vehicleDal.GetCarDetailByBrand(brandId));
         }
 
-        public IDataResult<List<Vehicle>> GetCarsByColorId(int colorId)
+        public IDataResult<List<CarDetailDto>> GetCarsByColorId(int colorId)
         {
-            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(c => c.ColorId == colorId));
+            return new SuccessDataResult<List<CarDetailDto>>(_vehicleDal.GetCarDetailByColor(colorId));
         }
 
         [CacheAspect]

@@ -38,6 +38,7 @@ namespace DataAccess.Concreate.EntityFramework
         {
             using (RentCarContext context=new RentCarContext())
             {
+
                 return context.Set<Vehicle>().SingleOrDefault(filter);
 
             }
@@ -71,6 +72,52 @@ namespace DataAccess.Concreate.EntityFramework
                                  DailyPrice = v.DailyPrice,
                                  ModelYear = v.ModelYear,
                                  Description=v.Description
+
+                             };
+                return result.ToList();
+            }
+        }
+        public List<CarDetailDto> GetCarDetailByBrand(int id)
+        {
+            using (RentCarContext context = new RentCarContext())
+            {
+                var result = from v in context.Cars
+                             join b in context.Brands on v.BrandId equals b.BrandId 
+                             join c in context.Colors on v.ColorId equals c.ColorId
+                             where b.BrandId==id 
+                    
+                             select new CarDetailDto
+                             {
+                                 carId = v.CarId,
+                                 carName = v.VehicleName,
+                                 brandName = b.BrandName,
+                                 colorName = c.ColorName,
+                                 DailyPrice = v.DailyPrice,
+                                 ModelYear = v.ModelYear,
+                                 Description = v.Description
+
+                             };
+                return result.ToList();
+            }
+        }
+        public List<CarDetailDto> GetCarDetailByColor(int id)
+        {
+            using (RentCarContext context = new RentCarContext())
+            {
+                var result = from v in context.Cars
+                             join b in context.Brands on v.BrandId equals b.BrandId
+                             join c in context.Colors on v.ColorId equals c.ColorId
+                             where c.ColorId == id
+
+                             select new CarDetailDto
+                             {
+                                 carId = v.CarId,
+                                 carName = v.VehicleName,
+                                 brandName = b.BrandName,
+                                 colorName = c.ColorName,
+                                 DailyPrice = v.DailyPrice,
+                                 ModelYear = v.ModelYear,
+                                 Description = v.Description
 
                              };
                 return result.ToList();
