@@ -57,12 +57,14 @@ namespace DataAccess.Concreate.EntityFramework
 
         public List<CarDetailDto> GetCarDetails()
         {
-            using (RentCarContext context=new RentCarContext())
+            using (RentCarContext context = new RentCarContext())
             {
 
                 var result = from v in context.Cars
                              join b in context.Brands on v.BrandId equals b.BrandId
                              join c in context.Colors on v.ColorId equals c.ColorId
+                             let image=(from img in context.CarImage where v.CarId==img.CarId
+                                        select img.ImagePath)
                              select new CarDetailDto
                              {
                                  carId = v.CarId,
@@ -71,12 +73,18 @@ namespace DataAccess.Concreate.EntityFramework
                                  colorName = c.ColorName,
                                  DailyPrice = v.DailyPrice,
                                  ModelYear = v.ModelYear,
-                                 Description=v.Description
+                                 Description = v.Description,
+                                 ImagePath = image.Any()? image.FirstOrDefault(): new CarImages
+                                 {
+                                     ImagePath= "images/logo.jpg"
+                                 }.ImagePath
 
                              };
                 return result.ToList();
             }
         }
+
+
         public List<CarDetailDto> GetCarDetailByBrand(int id)
         {
             using (RentCarContext context = new RentCarContext())
@@ -118,7 +126,7 @@ namespace DataAccess.Concreate.EntityFramework
                                  DailyPrice = v.DailyPrice,
                                  ModelYear = v.ModelYear,
                                  Description = v.Description
-
+                               
                              };
                 return result.ToList();
             }
@@ -133,6 +141,36 @@ namespace DataAccess.Concreate.EntityFramework
                 context.SaveChanges();
             }
         }
-        
+
+
+        public List<CarDetailDto> GetCarDetailsById(Expression<Func<Vehicle, bool>> filter = null)
+        {
+            using (RentCarContext context = new RentCarContext())
+            {
+                var result = from v in filter is null ? context.Cars : context.Cars.Where(filter)
+                             join b in context.Brands on v.BrandId equals b.BrandId
+                             join c in context.Colors on v.ColorId equals c.ColorId
+                             let image = (from img in context.CarImage
+                                          where v.CarId == img.CarId
+                                          select img.ImagePath)
+                             select new CarDetailDto
+                             {
+                                 carId = v.CarId,
+                                 carName = v.VehicleName,
+                                 brandName = b.BrandName,
+                                 colorName = c.ColorName,
+                                 DailyPrice = v.DailyPrice,
+                                 ModelYear = v.ModelYear,
+                                 Description = v.Description,
+                                 ImagePath = image.Any() ? image.FirstOrDefault() : new CarImages
+                                 {
+                                     ImagePath = "images/logo.jpg"
+                                 }.ImagePath
+                             };
+                return result.ToList();
+            }
+            throw new NotImplementedException();
+        }
+    
     }
 }

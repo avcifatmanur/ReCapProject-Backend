@@ -105,6 +105,13 @@ namespace Business.Concreate
 
         }
 
-       
+        public IDataResult<List<CarDetailDto>> GetCarDetailsById(int id)
+        {
+            if (_vehicleDal.GetCarDetailsById(c => c.CarId == id) != null)
+            {
+                return new SuccessDataResult<List<CarDetailDto>>(_vehicleDal.GetCarDetailsById(c => c.CarId == id), Messages.CarListed);
+            }
+            return new ErrorDataResult<List<CarDetailDto>>(Messages.CarInvalid);
+        }
     }
 }
