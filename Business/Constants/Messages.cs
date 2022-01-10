@@ -50,6 +50,7 @@ namespace Business.Constants
         public static string NotFoundImage= "Resim bulunamadı!";
         public static string DeletedImage="Resim silindi!";
         public static string UpdatedImage="Resim güncellendi!";
+        public static string ImageLimit="Bir araç için en fazla 5 adet resim eklenebilir!";
 
         public static string UserNotFound = "Kullanıcı bulunamadı!";
         public static string PasswordError = "Hatalı parola!";
