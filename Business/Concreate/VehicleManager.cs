@@ -76,12 +76,12 @@ namespace Business.Concreate
 
         public IDataResult<List<CarDetailDto>> GetCarsByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_vehicleDal.GetCarDetailByBrand(brandId));
+            return new SuccessDataResult<List<CarDetailDto>>(_vehicleDal.GetCarDetails(c=>c.brandId==brandId));
         }
 
         public IDataResult<List<CarDetailDto>> GetCarsByColorId(int colorId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_vehicleDal.GetCarDetailByColor(colorId));
+            return new SuccessDataResult<List<CarDetailDto>>(_vehicleDal.GetCarDetails(c=>c.colorId==colorId));
         }
 
         [CacheAspect]
@@ -107,11 +107,16 @@ namespace Business.Concreate
 
         public IDataResult<List<CarDetailDto>> GetCarDetailsById(int id)
         {
-            if (_vehicleDal.GetCarDetailsById(c => c.CarId == id) != null)
+            if (_vehicleDal.GetCarDetails(c => c.carId == id) != null)
             {
-                return new SuccessDataResult<List<CarDetailDto>>(_vehicleDal.GetCarDetailsById(c => c.CarId == id), Messages.CarListed);
+                return new SuccessDataResult<List<CarDetailDto>>(_vehicleDal.GetCarDetails(c => c.carId == id), Messages.CarListed);
             }
             return new ErrorDataResult<List<CarDetailDto>>(Messages.CarInvalid);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByBrandAndColor(int brandId, int colorId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_vehicleDal.GetCarDetails(c => c.brandId == brandId && c.colorId == colorId));
         }
     }
 }
